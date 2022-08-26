@@ -3,6 +3,7 @@ package hello.hellospring.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 // 컨트롤러를 정의하기 위한 annotation
 @Controller
@@ -21,4 +22,15 @@ public class HelloController {
         return "hello";
 
     }
+
+    @GetMapping("hello-mvc")
+    // 외부에서 파라미터를 받을 때 사용하는 annotation
+    // GET 방식: url을 통해 파라미터를 전달해줘야 한다(?변수명=값)
+    public String helloMvc(@RequestParam("name") String name, Model model)
+    {
+        model.addAttribute("name", name);
+        return "hello-template";
+
+    }
+
 }
