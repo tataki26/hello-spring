@@ -20,20 +20,23 @@ public class HelloController {
         // hello.html 파일의 data 인자에 치환
         // key로 접근하고 value를 사용한다
         model.addAttribute("data","hello!!");
-        return "hello";
+        return "hello"; // html 파일 이름
 
     }
 
+    // MVC, Template Engine
     @GetMapping("hello-mvc")
     // 외부에서 파라미터를 받을 때 사용하는 annotation
     // GET 방식: url을 통해 파라미터를 전달해줘야 한다(?변수명=값)
+    // ex:) localhost:8080/hello-mvc?name=LYS
     public String helloMvc(@RequestParam("name") String name, Model model)
     {
-        model.addAttribute("name", name);
-        return "hello-template";
+        model.addAttribute("name", name); // name=LYS
+        return "hello-template"; // html 파일 이름
 
     }
 
+    // API
     // 문자열 전달하기
     @GetMapping("hello-string")
     // HTTP(통신 프로토콜)의 body 부분에 리턴 값을 직접 넣어주는 역할
@@ -44,7 +47,7 @@ public class HelloController {
         return "hello " + name;
     }
 
-    // 데이터 전달하기
+    // 데이터(객체) 전달하기
     @GetMapping("hello-api")
     @ResponseBody
     public Hello helloApi(@RequestParam("name") String name){ // value
