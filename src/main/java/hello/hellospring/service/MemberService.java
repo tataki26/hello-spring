@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 // 이 annotation이 없으면 순수 자바 코드이기 때문에 스프링 컨테이너 내부 객체와 연결 불가능
-@Service
+// @Service
 public class MemberService {
 
     // 오직 한번만 할당할 수 있는 entity를 정의할 때 사용
@@ -20,7 +20,7 @@ public class MemberService {
     // 의존성 주입(Dependency Injection)
     // 하나의 클래스에서 다른 클래스를 내부에 변수로 사용하는 것 [의존성]
     // 위(내부)에서 직접 new를 생성하지 말고 외부에서 생성하도록 설정 [주입]
-    @Autowired
+    // @Autowired
     public MemberService(MemberRepository memberRepository){
         this.memberRepository = memberRepository;
     }

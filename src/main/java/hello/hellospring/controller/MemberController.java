@@ -20,8 +20,27 @@ public class MemberController {
     // 의존 관계 주입
     // 스프링 컨테이너에서 생성된 객체와 연결
     // @Service 클래스와 연결
+    // 1. 생성자 주입
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+        // memberService.setMemberRepository(); // setter 주입 시, 아무 개발자나 접근할 수 있다는 단점
     }
+
+    // 2. 필드 주입
+    // 유연하지 않아서 비추천
+    // @Autowired private MemberService memberService;
+
+    /*
+    // 3. setter 주입
+    // 접근 권한자를 public으로 해야 하는 단점(변경 위험)
+    // 의존 관계가 실행 중에 동적으로 변하는 경우(런타임 변화)는 거의 없다
+    private MemberService memberService;
+
+    @Autowired
+    public void setMemberService(MemberService memberService) {
+        this.memberService = memberService;
+
+    }
+     */
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 // 정형화된 패턴 - 스프링이 인식할 수 있는 클래스들
-@Repository
+// @Repository
 // MemberRepository의 구현체
 public class MemoryMemberRepository implements MemberRepository {
 
