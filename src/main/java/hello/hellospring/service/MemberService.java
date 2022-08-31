@@ -9,7 +9,16 @@ import java.util.Optional;
 
 public class MemberService {
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    // 오직 한번만 할당할 수 있는 entity를 정의할 때 사용
+    // final로 선언된 변수가 할당되면 항상 같은 값을 가진다
+    private final MemberRepository memberRepository;
+
+    // 의존성 주입(Dependency Injection)
+    // 하나의 클래스에서 다른 클래스를 내부에 변수로 사용하는 것 [의존성]
+    // 위(내부)에서 직접 new를 생성하지 말고 외부에서 생성하도록 설정 [주입]
+    public MemberService(MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
+    }
 
     /**
      * 회원 가입
