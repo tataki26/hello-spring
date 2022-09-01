@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="containers">
+
+  <!-- 사용자가 텍스트 박스에 값을 넣고 버튼을 누르면 action url에 post 방식으로 넘어온다 -->
+  <form action="/members/new" method="post">
+    <div class="form-group">
+      <label for="name">이름</label>
+      <!--텍스트 박스 / name="name" -> 키 값 -->
+      <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
+    </div>
+    <button type="submit">등록</button>
+  </form>
+</div>
+
+</body>
+</html>
