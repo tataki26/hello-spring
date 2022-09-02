@@ -46,18 +46,24 @@ public class JdbcMemberRepository implements MemberRepository {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
+        // 결과를 받기 위한 변수
         ResultSet rs = null;
 
         try {
 
             conn = getConnection();
-            pstmt = conn.prepareStatement(sql,
-                    Statement.RETURN_GENERATED_KEYS);
+            // 자동 생성 키 사용
+            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            // ? 안에 들어가는 인자
             pstmt.setString(1, member.getName());
+            // db에 실제 쿼리 적용
             pstmt.executeUpdate();
+            // key 반환
             rs = pstmt.getGeneratedKeys();
 
+            // 값을 가지고 있으면
             if (rs.next()) {
+                // 값을 가져와 member에 셋팅
                 member.setId(rs.getLong(1));
             } else {
                 throw new SQLException("id 조회 실패");
@@ -68,6 +74,7 @@ public class JdbcMemberRepository implements MemberRepository {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
+            // 자원을 다 쓰고 나면 반드시 반환할 것
             close(conn, pstmt, rs);
         }
 
@@ -87,10 +94,11 @@ public class JdbcMemberRepository implements MemberRepository {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, id);
+            // 조회
             rs = pstmt.executeQuery();
 
             if(rs.next()) {
-
+                // 값이 있으면 member에 담아서 return
                 Member member = new Member();
                 member.setId(rs.getLong("id"));
                 member.setName(rs.getString("name"));
@@ -125,6 +133,7 @@ public class JdbcMemberRepository implements MemberRepository {
 
             List<Member> members = new ArrayList<>();
 
+            // 루프 돌면서 리스트에 추가
             while(rs.next()) {
 
                 Member member = new Member();
@@ -168,6 +177,7 @@ public class JdbcMemberRepository implements MemberRepository {
 
             }
 
+            // 없으면 empty 반환
             return Optional.empty();
 
         } catch (Exception e) {
@@ -178,6 +188,7 @@ public class JdbcMemberRepository implements MemberRepository {
 
     }
 
+    // DataSourceUtils를 통해 getConnection을 해야 트랜잭션 시에도 동일한 connection 유지 가능
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);
     }
@@ -208,6 +219,7 @@ public class JdbcMemberRepository implements MemberRepository {
     }
 
     private void close(Connection conn) throws SQLException {
+        // close도 DataSourceUtils를 통해서 해야 한다
         DataSourceUtils.releaseConnection(conn, dataSource);
     }
 }
