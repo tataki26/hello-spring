@@ -1,6 +1,7 @@
 package hello.hellospring;
 
 import hello.hellospring.repository.JdbcMemberRepository;
+import hello.hellospring.repository.JdbcTemplateMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import hello.hellospring.service.MemberService;
@@ -35,6 +36,7 @@ public class SpringConfig {
         // 개방-폐쇄 원칙: 확장에는 열려 있고 수정(변경)에는 닫혀 있다
         //return new MemoryMemberRepository(); // 인터페이스가 아니라 구현체를 넣어줄 것!!
         // dataSource -> 스프링이 제공
-        return new JdbcMemberRepository(dataSource);
+        // return new JdbcMemberRepository(dataSource);
+        return new JdbcTemplateMemberRepository(dataSource);
     }
 }
