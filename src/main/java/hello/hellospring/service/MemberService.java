@@ -5,12 +5,14 @@ import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 // 이 annotation이 없으면 순수 자바 코드이기 때문에 스프링 컨테이너 내부 객체와 연결 불가능
 // @Service
+@Transactional // JPA 사용(데이터 저장, 변경)시 필수
 public class MemberService {
 
     // 오직 한번만 할당할 수 있는 entity를 정의할 때 사용

@@ -1,26 +1,34 @@
 package hello.hellospring;
 
-import hello.hellospring.repository.JdbcMemberRepository;
-import hello.hellospring.repository.JdbcTemplateMemberRepository;
-import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
+import hello.hellospring.repository.*;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 // 컴포넌트 스캔이 아닌 자바 코드로 직접 스프링 빈 등록하기
 @Configuration
 public class SpringConfig {
 
+    /*
     // 스프링 부트가 설정 파일을 읽어 자체적으로 빈 생성
     private DataSource dataSource;
 
     @Autowired
     public SpringConfig(DataSource dataSource) { // DI
         this.dataSource = dataSource;
+    }
+     */
+
+    // JPA
+    EntityManager em;
+
+    @Autowired
+    public SpringConfig(EntityManager em) {
+        this.em = em;
     }
 
     // MemberService -> MemberRepository
@@ -37,6 +45,7 @@ public class SpringConfig {
         //return new MemoryMemberRepository(); // 인터페이스가 아니라 구현체를 넣어줄 것!!
         // dataSource -> 스프링이 제공
         // return new JdbcMemberRepository(dataSource);
-        return new JdbcTemplateMemberRepository(dataSource);
+        // return new JdbcTemplateMemberRepository(dataSource);
+        return new JpaMemberRepository(em);
     }
 }
