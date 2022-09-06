@@ -23,6 +23,7 @@ public class SpringConfig {
     }
      */
 
+    /*
     // JPA
     EntityManager em;
 
@@ -30,14 +31,26 @@ public class SpringConfig {
     public SpringConfig(EntityManager em) {
         this.em = em;
     }
+     */
+
+    // spring data jpa
+    // DI -> spring data jpa가 구현체 자동 생성
+    private final MemberRepository memberRepository;
+
+    @Autowired
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     // MemberService -> MemberRepository
     // Controller는 예외 -> 스프링이 관리하는 빈(컴포넌트 스캔)
     @Bean
     public MemberService memberService() {
-        return new MemberService(memberRepository());
+        // return new MemberService(memberRepository());
+        return new MemberService(memberRepository); // 의존 관계 setting
     }
 
+    /*
     @Bean
     public MemberRepository memberRepository(){
         // 다형성: 어셈블리(조립하는 코드)만 수정해도 기존 코드를 전혀 손대지 않고 구현 클래스 변경 가능 -> 재사용성
@@ -48,4 +61,5 @@ public class SpringConfig {
         // return new JdbcTemplateMemberRepository(dataSource);
         return new JpaMemberRepository(em);
     }
+     */
 }
