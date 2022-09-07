@@ -31,6 +31,8 @@ public class MemberController {
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
         // memberService.setMemberRepository(); // setter 주입 시, 아무 개발자나 접근할 수 있다는 단점
+        // AOP로 생성된 프록시 확인
+        System.out.println("memberService = "+memberService.getClass());
     }
 
     // 2. 필드 주입

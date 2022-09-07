@@ -33,8 +33,23 @@ public class MemberService {
      */
     public Long join(Member member){
 
-        validateDuplicateMember(member);// 중복 회원 검증
+        /*
+        // AOP가 필요한 사항 - 메서드 호출 시간 측정
+        long start = System.currentTimeMillis();
 
+        try{
+            validateDuplicateMember(member);
+            memberRepository.save(member);
+            return member.getId();
+        }
+        finally{ // 예외처리 발생 여부를 떠나 무조건 실행하도록 하는 구문
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println("join = "+timeMs+"ms");
+        }
+         */
+
+        validateDuplicateMember(member);// 중복 회원 검증
         memberRepository.save(member); // 검증되면 저장
         // (optional) 해당 member의 id를 반환한다
         return member.getId();
@@ -61,6 +76,19 @@ public class MemberService {
      * 전체 회원 조회
      */
     public List<Member> findMembers(){
+
+        /*
+        // AOP가 필요한 사항 - 메서드 호출 시간 측정
+        long start = System.currentTimeMillis();
+        try{
+            return memberRepository.findAll();
+        } finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println("findMembers "+timeMs+"ms");
+        }
+         */
+
         return memberRepository.findAll();
     }
 
